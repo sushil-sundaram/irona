@@ -1,0 +1,119 @@
+# KiBot Automation Configuration (Vincent Nguyen Pattern)
+# Irona KiCad 10 Manufacturing & Documentation Pipeline
+
+kibot:
+  version: 1
+
+global:
+  out_dir: "Generated_Artifacts"
+  kiauto_wait: 30
+  kiauto_time_out: 120
+
+filters:
+  - name: "ignore_drc_courtyard"
+    description: "Ignore courtyard overlap warnings for high-density components"
+    type: "drc"
+    error: "courtyards_overlap"
+
+import:
+  - file: "definitions.yaml"
+    optional: true
+
+outputs:
+  # 1. Interactive HTML Bill of Materials (iBoM)
+  - name: "Interactive_BoM"
+    comment: "Generate Interactive HTML BoM for rapid hand assembly"
+    type: "ibom"
+    dir: "Assembly/iBoM"
+    options:
+      blacklist: "DNP*"
+      show_fields: "Value,Footprint,Description,Manufacturer,MPN"
+      highlight_pin1: "all"
+      layer_view: "FB"
+      dark_mode: true
+
+  # 2. Schematic PDF Printout
+  - name: "Schematic_PDF"
+    comment: "High-resolution schematic documentation PDF"
+    type: "pdf_sch_print"
+    dir: "Schematic"
+    options:
+      output: "%f_Schematic.pdf"
+      title_block: true
+      monochrome: false
+
+  # 3. Fabrication Gerbers (RS-274X)
+  - name: "Gerbers_Fabrication"
+    comment: "Standard RS-274X Gerber fabrication files"
+    type: "gerber"
+    dir: "Fabrication/Gerbers"
+    options:
+      use_aux_axis_as_origin: false
+      line_width: 0.1
+      subtract_mask_from_silk: true
+      use_protel_extensions: false
+      create_gerber_job_file: true
+    layers:
+      - "F.Cu"
+      - "B.Cu"
+      - "F.SilkS"
+      - "B.SilkS"
+      - "F.Mask"
+      - "B.Mask"
+      - "F.Paste"
+      - "B.Paste"
+      - "Edge.Cuts"
+
+  # 4. NC Excellon Drill Files
+  - name: "NC_Drill"
+    comment: "Excellon format drill files for PCB drilling"
+    type: "excellon"
+    dir: "Fabrication/Drill"
+    options:
+      metric_units: true
+      pth_and_npth_single_file: false
+      map: "pdf"
+
+  # 5. Pick & Place Component Position CSV
+  - name: "Pick_and_Place"
+    comment: "SMT machine placement XY coordinates (XYRS)"
+    type: "position"
+    dir: "Assembly/PickAndPlace"
+    options:
+      format: "CSV"
+      units: "millimeters"
+      separate_files_for_front_and_back: false
+      only_smd: false
+
+  # 6. Photorealistic 2D Top & Bottom PCB Renderings
+  - name: "Render_Top_2D"
+    comment: "2D High-resolution render of top layer"
+    type: "render_2d"
+    dir: "Documentation/Renders"
+    options:
+      output: "%f_Top_2D.png"
+      layer: "top"
+      width: 2400
+      height: 1600
+      transparent_background: true
+
+  - name: "Render_Bottom_2D"
+    comment: "2D High-resolution render of bottom layer"
+    type: "render_2d"
+    dir: "Documentation/Renders"
+    options:
+      output: "%f_Bottom_2D.png"
+      layer: "bottom"
+      width: 2400
+      height: 1600
+      transparent_background: true
+
+  # 7. 3D STEP Model Export
+  - name: "Step_3D_Model"
+    comment: "3D CAD STEP exchange file"
+    type: "step"
+    dir: "CAD/3D"
+    options:
+      output: "%f_Assembly.step"
+      min_distance: 0.1
+      no_virtual: true

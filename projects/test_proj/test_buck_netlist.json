@@ -1,0 +1,365 @@
+{
+  "project": "test_buck",
+  "components": [
+    {
+      "uuid": "0618d9a8-0232-46db-be24-8b13cd70dd09",
+      "ref": "J1",
+      "value": "Power_In",
+      "lib_id": "Irona_Symbols:Power_In",
+      "footprint": "Irona_Footprints:Power_In",
+      "x": 38.1,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "VIN"
+        },
+        {
+          "num": "2",
+          "name": "GND"
+        }
+      ]
+    },
+    {
+      "uuid": "7b8fe286-6894-4006-9ac8-baeb88509971",
+      "ref": "C1",
+      "value": "10uF/25V",
+      "lib_id": "Irona_Symbols:C_0805",
+      "footprint": "Irona_Footprints:C_0805",
+      "x": 58.42,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "48e98c87-31a1-4d78-9fef-471f0cc6c1e8",
+      "ref": "C2",
+      "value": "100nF/50V",
+      "lib_id": "Irona_Symbols:C_0805",
+      "footprint": "Irona_Footprints:C_0805",
+      "x": 71.12,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "0beef271-8aa5-46d8-9d65-202459eb4127",
+      "ref": "U1",
+      "value": "TPS54202",
+      "lib_id": "Irona_Symbols:TPS54202",
+      "footprint": "Irona_Footprints:TPS54202",
+      "x": 99.06,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "GND",
+          "side": "left"
+        },
+        {
+          "num": "2",
+          "name": "SW",
+          "side": "right"
+        },
+        {
+          "num": "3",
+          "name": "VIN",
+          "side": "left"
+        },
+        {
+          "num": "4",
+          "name": "FB",
+          "side": "right"
+        },
+        {
+          "num": "5",
+          "name": "EN",
+          "side": "left"
+        },
+        {
+          "num": "6",
+          "name": "BOOT",
+          "side": "right"
+        }
+      ]
+    },
+    {
+      "uuid": "efe2f14f-6632-4868-9f33-3bf78ddc28df",
+      "ref": "C_BOOT",
+      "value": "100nF",
+      "lib_id": "Irona_Symbols:C_0805",
+      "footprint": "Irona_Footprints:C_0805",
+      "x": 114.3,
+      "y": 50.8,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "2ff9cbcd-b3b3-444b-addd-da257c33777f",
+      "ref": "L1",
+      "value": "4.7uH",
+      "lib_id": "Irona_Symbols:L_0805",
+      "footprint": "Irona_Footprints:L_0805",
+      "x": 132.08,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "db707d29-9725-4718-98f8-69e3c16e9ddf",
+      "ref": "R1",
+      "value": "40.2k",
+      "lib_id": "Irona_Symbols:R_0805",
+      "footprint": "Irona_Footprints:R_0805",
+      "x": 152.4,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "2a4ae1ce-eaf6-41d4-a566-884cababfee8",
+      "ref": "R2",
+      "value": "10.0k",
+      "lib_id": "Irona_Symbols:R_0805",
+      "footprint": "Irona_Footprints:R_0805",
+      "x": 152.4,
+      "y": 76.2,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "2881471b-2433-43d9-8078-62dbe36ca55b",
+      "ref": "C3",
+      "value": "22uF/10V",
+      "lib_id": "Irona_Symbols:C_0805",
+      "footprint": "Irona_Footprints:C_0805",
+      "x": 170.18,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "1631f10f-0bfa-450e-9538-d302d28dfb46",
+      "ref": "C4",
+      "value": "22uF/10V",
+      "lib_id": "Irona_Symbols:C_0805",
+      "footprint": "Irona_Footprints:C_0805",
+      "x": 182.88,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "1"
+        },
+        {
+          "num": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "uuid": "dad671e7-1e92-44db-86e3-baa328298745",
+      "ref": "J2",
+      "value": "Power_Out",
+      "lib_id": "Irona_Symbols:Power_Out",
+      "footprint": "Irona_Footprints:Power_Out",
+      "x": 203.2,
+      "y": 63.5,
+      "angle": 0,
+      "pins": [
+        {
+          "num": "1",
+          "name": "VOUT"
+        },
+        {
+          "num": "2",
+          "name": "GND"
+        }
+      ]
+    }
+  ],
+  "nets": {
+    "VIN": [
+      {
+        "ref": "J1",
+        "pin": "1"
+      },
+      {
+        "ref": "C1",
+        "pin": "1"
+      },
+      {
+        "ref": "C2",
+        "pin": "1"
+      },
+      {
+        "ref": "U1",
+        "pin": "3"
+      },
+      {
+        "ref": "U1",
+        "pin": "5"
+      }
+    ],
+    "GND": [
+      {
+        "ref": "J1",
+        "pin": "2"
+      },
+      {
+        "ref": "C1",
+        "pin": "2"
+      },
+      {
+        "ref": "C2",
+        "pin": "2"
+      },
+      {
+        "ref": "U1",
+        "pin": "1"
+      },
+      {
+        "ref": "R2",
+        "pin": "2"
+      },
+      {
+        "ref": "C3",
+        "pin": "2"
+      },
+      {
+        "ref": "C4",
+        "pin": "2"
+      },
+      {
+        "ref": "J2",
+        "pin": "2"
+      }
+    ],
+    "SW_NODE": [
+      {
+        "ref": "U1",
+        "pin": "2"
+      },
+      {
+        "ref": "C_BOOT",
+        "pin": "2"
+      },
+      {
+        "ref": "L1",
+        "pin": "1"
+      }
+    ],
+    "FB": [
+      {
+        "ref": "U1",
+        "pin": "4"
+      },
+      {
+        "ref": "R1",
+        "pin": "2"
+      },
+      {
+        "ref": "R2",
+        "pin": "1"
+      }
+    ],
+    "BOOT": [
+      {
+        "ref": "U1",
+        "pin": "6"
+      },
+      {
+        "ref": "C_BOOT",
+        "pin": "1"
+      }
+    ],
+    "VOUT_3V3": [
+      {
+        "ref": "L1",
+        "pin": "2"
+      },
+      {
+        "ref": "R1",
+        "pin": "1"
+      },
+      {
+        "ref": "C3",
+        "pin": "1"
+      },
+      {
+        "ref": "C4",
+        "pin": "1"
+      },
+      {
+        "ref": "J2",
+        "pin": "1"
+      }
+    ]
+  }
+}

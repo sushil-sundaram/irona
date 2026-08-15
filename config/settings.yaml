@@ -1,0 +1,44 @@
+llm:
+  cloud_orchestrator:
+    provider: "google"
+    model: "gemini-2.5-pro"
+    temperature: 0.1
+    max_tokens: 4096
+  spatial_agent:
+    provider: "ollama"
+    base_url: "http://localhost:11434"
+    model: "llama3.2-vision"
+    temperature: 0.2
+    fallback_model: "mistral"
+
+apis:
+  octopart:
+    endpoint: "https://nexar.api.lexisnexis.com/graphql"
+    client_id: "${OCTOPART_CLIENT_ID}"
+    client_secret: "${OCTOPART_CLIENT_SECRET}"
+  snapmagic:
+    endpoint: "https://www.snapmagic.com/api/v1"
+    api_key: "${SNAPMAGIC_API_KEY}"
+
+kicad:
+  version: 10
+  ipc_socket_path: "/tmp/kicad_ipc_socket"
+  ipc_host: "127.0.0.1"
+  ipc_port: 4242
+  default_layer_count: 2
+  grid_resolution_mm: 0.5
+  clearance_mm: 0.2
+  trace_width_default_mm: 0.25
+  trace_width_power_mm: 0.8
+  via_drill_mm: 0.3
+  via_size_mm: 0.6
+
+physics:
+  max_voltage_drop_mv: 50.0
+  max_current_density_A_mm2: 35.0
+  max_temperature_c: 85.0
+  ambient_temperature_c: 25.0
+  copper_thickness_oz: 1.0
+  fr4_dielectric_constant: 4.5
+  thermal_conductivity_fr4_W_mK: 0.3
+  thermal_conductivity_copper_W_mK: 385.0

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Irona_Symbols")(type "KiCad")(uri "${KIPRJMOD}/libraries/symbols/irona.kicad_sym")(options "")(descr "Irona Auto-generated Symbols"))
+)
