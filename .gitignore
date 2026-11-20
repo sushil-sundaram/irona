@@ -7,3 +7,5 @@ shots_tmp/
 # KiCad local editor state
 *.kicad_prl
 *-backups/
+# Rust build output
+/target
