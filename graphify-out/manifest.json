@@ -1,0 +1,230 @@
+{
+  "agents/__init__.py": {
+    "mtime": 1786798778.791971,
+    "seen": 1786801664.0607598,
+    "ast_hash": "42b32d35ced449ef513e167a53d426be",
+    "semantic_hash": ""
+  },
+  "agents/graph.py": {
+    "mtime": 1786800796.0604339,
+    "seen": 1786801664.0607634,
+    "ast_hash": "1e9904f4e60fba2ff6778cc56d5dd804",
+    "semantic_hash": ""
+  },
+  "agents/orchestrator.py": {
+    "mtime": 1786798969.734083,
+    "seen": 1786801664.0607648,
+    "ast_hash": "fe9b17bd79d3362e5ee6719874205519",
+    "semantic_hash": ""
+  },
+  "agents/review_agent.py": {
+    "mtime": 1786800775.6345305,
+    "seen": 1786801664.0607655,
+    "ast_hash": "a31e9bf72c128207e15dc4d8a512657b",
+    "semantic_hash": ""
+  },
+  "agents/spatial_agent.py": {
+    "mtime": 1786799536.3834472,
+    "seen": 1786801664.060766,
+    "ast_hash": "916fc3eaa4f11b190de051258ea16990",
+    "semantic_hash": ""
+  },
+  "agents/state.py": {
+    "mtime": 1786800784.9344866,
+    "seen": 1786801664.0607665,
+    "ast_hash": "64a61429c7e0c6a3cb29d98c4f3a9021",
+    "semantic_hash": ""
+  },
+  "kicad_scripts/__init__.py": {
+    "mtime": 1786798775.9359844,
+    "seen": 1786801664.060767,
+    "ast_hash": "6cdc173f38dd689f73c289f2875d37a9",
+    "semantic_hash": ""
+  },
+  "kicad_scripts/ipc_server_bridge.py": {
+    "mtime": 1786799064.6686413,
+    "seen": 1786801664.0607674,
+    "ast_hash": "e3daf6febb333ad455105f4d2d42161b",
+    "semantic_hash": ""
+  },
+  "kicad_scripts/sexpr_generator.py": {
+    "mtime": 1786798799.669874,
+    "seen": 1786801664.0607684,
+    "ast_hash": "652726d344e39234b77918377059bf25",
+    "semantic_hash": ""
+  },
+  "main.py": {
+    "mtime": 1786800827.3832855,
+    "seen": 1786801664.0607688,
+    "ast_hash": "fbb10c6ec0cb3aeb25d78842529a39e2",
+    "semantic_hash": ""
+  },
+  "mcp_server.py": {
+    "mtime": 1786801608.6915872,
+    "seen": 1786801664.0607693,
+    "ast_hash": "d7e9ef16c4b0fa29f6040f3ab1a611e6",
+    "semantic_hash": ""
+  },
+  "pyproject.toml": {
+    "mtime": 1786798728.499205,
+    "seen": 1786801664.06077,
+    "ast_hash": "ffd1962d9dc8f9a52ca891063b24c5d8",
+    "semantic_hash": ""
+  },
+  "tests/test_agents_graph.py": {
+    "mtime": 1786799055.1906855,
+    "seen": 1786801664.0607705,
+    "ast_hash": "816b5e4b18920ce81598b225ac93dc1b",
+    "semantic_hash": ""
+  },
+  "tests/test_doc_generator.py": {
+    "mtime": 1786800922.9288332,
+    "seen": 1786801664.060771,
+    "ast_hash": "b5b8e07ebb8194291b0b57c347aa33c8",
+    "semantic_hash": ""
+  },
+  "tests/test_drc_validator.py": {
+    "mtime": 1786799886.6697881,
+    "seen": 1786801664.0607715,
+    "ast_hash": "8b3415ed13097c9ff349ce69950c14cc",
+    "semantic_hash": ""
+  },
+  "tests/test_erc_validator.py": {
+    "mtime": 1786799882.8308065,
+    "seen": 1786801664.0607722,
+    "ast_hash": "21f392400cd69b0b99cf083af6264390",
+    "semantic_hash": ""
+  },
+  "tests/test_ipc_router.py": {
+    "mtime": 1786799044.8207338,
+    "seen": 1786801664.0607727,
+    "ast_hash": "3251394477797824b62ef61e176f0b12",
+    "semantic_hash": ""
+  },
+  "tests/test_librarian.py": {
+    "mtime": 1786799033.0897882,
+    "seen": 1786801664.0607731,
+    "ast_hash": "0fde36544149dcd63dd91d6801320128",
+    "semantic_hash": ""
+  },
+  "tests/test_pcb_reviewer.py": {
+    "mtime": 1786800880.1410358,
+    "seen": 1786801664.0607736,
+    "ast_hash": "6694e043fb8454f7d6a6096eedf31b0d",
+    "semantic_hash": ""
+  },
+  "tests/test_physics_solver.py": {
+    "mtime": 1786799051.0627046,
+    "seen": 1786801664.060774,
+    "ast_hash": "924a3e93ba991d35eb550ebd52c60d38",
+    "semantic_hash": ""
+  },
+  "tests/test_review_agent.py": {
+    "mtime": 1786800890.3799875,
+    "seen": 1786801664.0607748,
+    "ast_hash": "7cfb9cbde6b4324f12a86586af89e582",
+    "semantic_hash": ""
+  },
+  "tests/test_schematic.py": {
+    "mtime": 1786799040.7877524,
+    "seen": 1786801664.0607755,
+    "ast_hash": "72bdb0610ec8c67d01f952df3b2f2af0",
+    "semantic_hash": ""
+  },
+  "tools/__init__.py": {
+    "mtime": 1786798772.9029984,
+    "seen": 1786801664.0607762,
+    "ast_hash": "037b7e80c1c30b8bc0cd200789693e3e",
+    "semantic_hash": ""
+  },
+  "tools/doc_generator.py": {
+    "mtime": 1786800873.9110653,
+    "seen": 1786801664.0607772,
+    "ast_hash": "9d684430962e6c0b7c760fad4154b204",
+    "semantic_hash": ""
+  },
+  "tools/drc_validator.py": {
+    "mtime": 1786799845.2309868,
+    "seen": 1786801664.0607781,
+    "ast_hash": "2c4d8d593c244de65f2ab6ea119c071f",
+    "semantic_hash": ""
+  },
+  "tools/erc_validator.py": {
+    "mtime": 1786799459.6398041,
+    "seen": 1786801664.0607789,
+    "ast_hash": "96df8a5f37668d2463e34db8f035014a",
+    "semantic_hash": ""
+  },
+  "tools/ipc_router.py": {
+    "mtime": 1786799773.0783327,
+    "seen": 1786801664.0607793,
+    "ast_hash": "e439fba6e85d0b03712cea0ad3e03606",
+    "semantic_hash": ""
+  },
+  "tools/librarian.py": {
+    "mtime": 1786798768.922017,
+    "seen": 1786801664.06078,
+    "ast_hash": "90d324d5897a535ee2824f220c2656dd",
+    "semantic_hash": ""
+  },
+  "tools/pcb_reviewer.py": {
+    "mtime": 1786800761.4335978,
+    "seen": 1786801664.0607805,
+    "ast_hash": "03d560366b7c2c8b1d502b7c53809a03",
+    "semantic_hash": ""
+  },
+  "tools/physics_solver.py": {
+    "mtime": 1786799785.6352725,
+    "seen": 1786801664.060781,
+    "ast_hash": "ae462863436b60698ce5bf1aaea22651",
+    "semantic_hash": ""
+  },
+  "tools/schematic_builder.py": {
+    "mtime": 1786798820.8187757,
+    "seen": 1786801664.0607815,
+    "ast_hash": "bb275010f0502d3bec27df93b6007e7a",
+    "semantic_hash": ""
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1786798948.8131802,
+    "seen": 1786801664.0607824,
+    "ast_hash": "d1a968b92673a878b80585b20468b4b3",
+    "semantic_hash": ""
+  },
+  "GEMINI.md": {
+    "mtime": 1786798721.7822363,
+    "seen": 1786801664.060783,
+    "ast_hash": "b70b274073552c72ac8bfe1c2f149e75",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1786799077.5965812,
+    "seen": 1786801664.0607836,
+    "ast_hash": "0ac7f1b7dbba08e7ca865d5ccb90d8c7",
+    "semantic_hash": ""
+  },
+  "config/kibot.yaml": {
+    "mtime": 1786798942.2542107,
+    "seen": 1786801664.0607843,
+    "ast_hash": "09cfaa201ba93c4ab8e3b95c40d261b7",
+    "semantic_hash": ""
+  },
+  "config/settings.yaml": {
+    "mtime": 1786798735.99917,
+    "seen": 1786801664.0607848,
+    "ast_hash": "39995ec4217c8d135245fa3c874804aa",
+    "semantic_hash": ""
+  },
+  "projects/buck_12v_3v3/Generated_Artifacts/index.html": {
+    "mtime": 1786800932.217473,
+    "seen": 1786801664.0607853,
+    "ast_hash": "c8a051c83edf14950303243482ac3763",
+    "semantic_hash": ""
+  },
+  "requirements.txt": {
+    "mtime": 1786798732.2621875,
+    "seen": 1786801664.060786,
+    "ast_hash": "49a281455303cb1c3ed1af8e3f24e32b",
+    "semantic_hash": ""
+  }
+}
