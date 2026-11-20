@@ -2,7 +2,7 @@
   "project": "buck_12v_3v3",
   "components": [
     {
-      "uuid": "8654be9f-fc1d-4f7e-994e-198bbcfb8552",
+      "uuid": "a83daa75-35a0-4aa6-80da-6dadbddb1440",
       "ref": "J1",
       "value": "Power_In",
       "lib_id": "Irona_Symbols:Power_In",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "uuid": "1c083c5e-563f-414d-8b8c-20fd58872ab1",
+      "uuid": "66ccc8e4-4bfa-45d2-9b1f-ee268caba510",
       "ref": "C1",
       "value": "10uF/25V",
       "lib_id": "Irona_Symbols:C_0805",
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "uuid": "2eff8306-c5ef-4923-90dc-add949cd456c",
+      "uuid": "628a521e-a16c-4988-aeb3-acd9fd2a613b",
       "ref": "C2",
       "value": "100nF/50V",
       "lib_id": "Irona_Symbols:C_0805",
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "uuid": "388b34bb-8a91-4884-bfee-bafdb0e2c09d",
+      "uuid": "1c3bf45e-5419-49a1-92e7-6704977c8a74",
       "ref": "U1",
       "value": "TPS54202",
       "lib_id": "Irona_Symbols:TPS54202",
@@ -104,7 +104,7 @@
       ]
     },
     {
-      "uuid": "14ccd5d2-70d9-432b-b746-2b9126e6608e",
+      "uuid": "47772075-ee5e-47fd-855f-7dd1b3bbab52",
       "ref": "C_BOOT",
       "value": "100nF",
       "lib_id": "Irona_Symbols:C_0805",
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "uuid": "a1920c67-0892-425a-9416-89479385de9c",
+      "uuid": "0cb1c5fd-d79f-4c55-81dc-2844db54409d",
       "ref": "L1",
       "value": "4.7uH",
       "lib_id": "Irona_Symbols:L_0805",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "uuid": "3bbaa75c-c4e2-46f6-890a-9070e83dd5a2",
+      "uuid": "835ff7b6-e06b-47a4-b2eb-f7e5cd5f6aff",
       "ref": "R1",
       "value": "40.2k",
       "lib_id": "Irona_Symbols:R_0805",
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "uuid": "b9a24d5c-fd39-42a3-a2ea-1de2092a7957",
+      "uuid": "ef6fd42c-6370-4952-9fdf-b9811d208fa2",
       "ref": "R2",
       "value": "10.0k",
       "lib_id": "Irona_Symbols:R_0805",
@@ -184,7 +184,7 @@
       ]
     },
     {
-      "uuid": "2272e895-8d4c-4c52-ac8a-71ae4dac6c3d",
+      "uuid": "0061357b-cba9-4085-8aad-e20cc41f2da8",
       "ref": "C3",
       "value": "22uF/10V",
       "lib_id": "Irona_Symbols:C_0805",
@@ -204,7 +204,7 @@
       ]
     },
     {
-      "uuid": "900f01f2-df76-4f08-a22b-7b774b608e8b",
+      "uuid": "76fc244b-b814-4f85-8f6a-477d35558bfd",
       "ref": "C4",
       "value": "22uF/10V",
       "lib_id": "Irona_Symbols:C_0805",
@@ -224,7 +224,7 @@
       ]
     },
     {
-      "uuid": "1265e152-f2e1-4eb2-ab3e-fc0419cf53b9",
+      "uuid": "2e90860f-9a60-4248-88ee-887523c2e578",
       "ref": "J2",
       "value": "Power_Out",
       "lib_id": "Irona_Symbols:Power_Out",

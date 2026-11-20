@@ -1,0 +1,16 @@
+{
+  "load_currents_A": {
+    "SW_NODE": 2.0,
+    "VIN": 0.61,
+    "VOUT_3V3": 2.0
+  },
+  "power_dissipation_W": {
+    "L1": 0.15,
+    "U1": 0.35
+  },
+  "ambient_temp_c": 25.0,
+  "limits": {
+    "max_vdrop_mv": 50.0,
+    "max_temp_c": 85.0
+  }
+}

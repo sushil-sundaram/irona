@@ -117,3 +117,19 @@ outputs:
       output: "%f_Assembly.step"
       min_distance: 0.1
       no_virtual: true
+
+  # 8. KDT Hierarchical Documentation & Stackup Schedule (nguyen-v/KDT_Hierarchical_KiBot)
+  - name: "KDT_Stackup_and_Fab_Notes"
+    comment: "Automated layer stackup, drill schedule, DNP markers, and IPC-6012 Class 3 fabrication notes"
+    type: "report"
+    dir: "Documentation/KDT"
+    options:
+      output: "%f_KDT_Hierarchical_Fabrication_Suite.txt"
+
+  # 9. Executive Engineering PDF Report
+  - name: "Engineering_PDF_Report"
+    comment: "Consolidated publication-grade engineering verification and compliance PDF report"
+    type: "pdf_sch_print"
+    dir: "Documentation"
+    options:
+      output: "%f_Engineering_Report.pdf"

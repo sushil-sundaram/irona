@@ -4,31 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "irona-kicad"
-version = "0.1.0"
-description = "Autonomous Multi-Agent AI Co-Pilot for KiCad 10"
+version = "2.0.0"
+description = "KiCad plugins and CLI: board simulation, DRC/ERC, design review and documentation"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "pydantic>=2.5.0",
-    "pyyaml>=6.0.1",
-    "requests>=2.31.0",
-    "numpy>=1.24.0",
-    "scipy>=1.11.0",
-    "rich>=13.7.0",
-    "click>=8.1.7",
-    "sexpdata>=1.0.2",
-    "langchain>=0.2.0",
-    "langchain-core>=0.2.0",
-    "langchain-community>=0.2.0",
-    "langchain-google-genai>=1.0.5",
-    "langgraph>=0.1.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0.0",
-    "pytest-asyncio>=0.23.0",
-]
+dependencies = []  # standard library only; kicad-cli is used for Gerbers/drill/schematic PDF when present
 
 [project.scripts]
-irona = "main:cli"
+irona = "irona.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["irona*"]
+
+[tool.setuptools.package-data]
+irona = ["happy/*.md", "happy/**/*.md"]

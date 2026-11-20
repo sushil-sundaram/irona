@@ -1,14 +1,2 @@
-pydantic>=2.5.0
-pyyaml>=6.0.1
-requests>=2.31.0
-numpy>=1.24.0
-scipy>=1.11.0
-rich>=13.7.0
-click>=8.1.7
-sexpdata>=1.0.2
-langchain>=0.2.0
-langchain-core>=0.2.0
-langchain-community>=0.2.0
-langchain-google-genai>=1.0.5
-langgraph>=0.1.0
-pytest>=8.0.0
+# Irona needs only the Python standard library.
+# Optional: kicad-cli (ships with KiCad) for Gerbers, drill files and schematic PDFs.

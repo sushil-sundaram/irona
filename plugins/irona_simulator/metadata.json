@@ -1,0 +1,14 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "Irona Simulator",
+  "description": "DC IR drop, current density, thermal and trace impedance estimates for the open board.",
+  "description_full": "DC IR drop, current density, thermal and trace impedance estimates for the open board. Part of the Irona plugin set; requires the Irona repository (see install_kicad_plugins.py).",
+  "identifier": "org.irona.simulator",
+  "type": "plugin",
+  "author": { "name": "Irona" },
+  "license": "MIT",
+  "resources": {},
+  "versions": [
+    { "version": "2.0.0", "status": "stable", "kicad_version": "9.0" }
+  ]
+}

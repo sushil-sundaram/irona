@@ -1,0 +1,14 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "Irona Docs",
+  "description": "Design report PDF, schematic PDF, Gerbers, drill, BOM, placement and a fab package.",
+  "description_full": "Design report PDF, schematic PDF, Gerbers, drill, BOM, placement and a fab package. Part of the Irona plugin set; requires the Irona repository (see install_kicad_plugins.py).",
+  "identifier": "org.irona.docs",
+  "type": "plugin",
+  "author": { "name": "Irona" },
+  "license": "MIT",
+  "resources": {},
+  "versions": [
+    { "version": "2.0.0", "status": "stable", "kicad_version": "9.0" }
+  ]
+}
