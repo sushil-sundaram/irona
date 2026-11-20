@@ -7,6 +7,7 @@ name = "irona-kicad"
 version = "2.0.0"
 description = "KiCad plugins and CLI: board simulation, DRC/ERC, design review and documentation"
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = []  # standard library only; kicad-cli is used for Gerbers/drill/schematic PDF when present
 

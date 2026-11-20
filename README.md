@@ -110,3 +110,7 @@ install_kicad_plugins.py
 ## Acknowledgements
 
 The circuit review uses analyzers vendored from [kicad-happy](https://github.com/aklofas/kicad-happy) in `irona/happy/`. See that project for its licence terms.
+
+## License
+
+Irona is released under the [MIT License](LICENSE). The vendored code in `irona/happy/` remains under the licence of the kicad-happy project.
