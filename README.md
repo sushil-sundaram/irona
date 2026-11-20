@@ -109,7 +109,8 @@ install_kicad_plugins.py
 
 ## Acknowledgements
 
-The circuit review uses analyzers vendored from [kicad-happy](https://github.com/aklofas/kicad-happy) in `irona/happy/`. See that project for its licence terms.
+- [kicad-happy](https://github.com/aklofas/kicad-happy) by aklofas: the circuit review uses its analyzers, vendored in `irona/happy/`. See that project for its licence terms.
+- [KDT_Hierarchical_KiBot](https://github.com/nguyen-v/KDT_Hierarchical_KiBot) by nguyen-v: the KiBot documentation and fabrication configuration in `config/kibot.yaml` follows its approach.
 
 ## License
 
