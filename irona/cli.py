@@ -5,6 +5,8 @@ Command line entry point (also used by CI):
     python -m irona check  PROJECT [--check]          # DRC + ERC
     python -m irona review PROJECT                    # SI/PI + circuit review
     python -m irona docs   PROJECT                    # report, schematic PDF, Gerbers, BOM, fab zip
+    python -m irona ask    PROJECT "question"         # ask Claude about the design (needs anthropic + key)
+    python -m irona mcp    [--project PROJECT]        # MCP server for Claude Code / Desktop / Antigravity
 """
 
 import argparse
@@ -82,6 +84,34 @@ def cmd_docs(args) -> int:
     return 0
 
 
+def cmd_ask(args) -> int:
+    from irona import assistant as ai
+
+    if not ai.sdk_available():
+        raise SystemExit(ai.INSTALL_HINT)
+    cfg = ai.load_config()
+    if args.effort:
+        cfg["effort"] = args.effort
+    if args.no_web:
+        cfg["web_search"] = False
+    bot = ai.Assistant(Project(args.project), cfg)
+    question = " ".join(args.question) or sys.stdin.read()
+    try:
+        bot.ask(question, on_text=lambda t: print(t, end="", flush=True),
+                on_status=lambda s: print(f"[{s}]", file=sys.stderr, flush=True) if s and args.verbose else None)
+    except RuntimeError as e:
+        raise SystemExit(str(e))
+    print()
+    if args.save:
+        print(f"Saved {bot.save_transcript()}", file=sys.stderr)
+    return 0
+
+
+def cmd_mcp(args) -> int:
+    from irona.mcp_server import main as serve
+    return serve(str(args.project) if args.project else None)
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="irona", description="Simulation, checks, review and documentation for KiCad projects.")
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -109,6 +139,18 @@ def main(argv=None) -> int:
     p.add_argument("project", type=Path)
     p.add_argument("--out", help="output folder (default PROJECT/irona-out/docs)")
     p.set_defaults(func=cmd_docs)
+
+    p = sub.add_parser("ask", help="ask Claude about the design (part availability, datasheets, implementation)")
+    p.add_argument("project", type=Path)
+    p.add_argument("question", nargs="*", help="the question (read from stdin when omitted)")
+    p.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"])
+    p.add_argument("--no-web", action="store_true", help="answer from the design only, without web search")
+    p.add_argument("--save", action="store_true", help="save the transcript to PROJECT/irona-out/assistant/")
+    p.set_defaults(func=cmd_ask)
+
+    p = sub.add_parser("mcp", help="MCP server (stdio) for Claude Code, Claude Desktop and Antigravity")
+    p.add_argument("--project", type=Path, help="default project; tools also accept a `project` argument")
+    p.set_defaults(func=cmd_mcp)
 
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s", stream=sys.stderr)

@@ -25,6 +25,8 @@ class ProjectTestCase(unittest.TestCase):
         for f in src.iterdir():
             if f.is_file() and f.name.endswith(SOURCE_SUFFIXES):
                 shutil.copy2(f, self.project_dir / f.name)
+        if (src / "libraries").is_dir():  # project symbol/footprint libraries (pin names)
+            shutil.copytree(src / "libraries", self.project_dir / "libraries")
         self.pcb = next(self.project_dir.glob("*.kicad_pcb"))
         self.sch = next(self.project_dir.glob("*.kicad_sch"))
         nl = list(self.project_dir.glob("*_netlist.json"))

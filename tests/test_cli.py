@@ -40,3 +40,11 @@ class TestCLIFailing(ProjectTestCase):
     def test_check_exit_code(self):
         code, _ = run("check", str(self.project_dir), "--check")
         self.assertEqual(code, 1)
+
+    def test_ask_explains_missing_sdk(self):
+        from unittest import mock
+        from irona import assistant as ai
+        with mock.patch.object(ai, "sdk_available", return_value=False):
+            with self.assertRaises(SystemExit) as cm:
+                run("ask", str(self.project_dir), "hello")
+        self.assertIn("anthropic", str(cm.exception))

@@ -1,2 +1,4 @@
 # Irona needs only the Python standard library.
 # Optional: kicad-cli (ships with KiCad) for Gerbers, drill files and schematic PDFs.
+# Optional, for the Assistant plugin and `irona ask` only:
+# anthropic

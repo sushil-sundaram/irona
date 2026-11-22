@@ -10,19 +10,23 @@ repository, so the shared `irona` core is imported from here (edit once, all plu
 
 Also removes the old single "Irona Hardware Engineering Studio" plugin and its PCM entries.
 
-    python3 install_kicad_plugins.py              # install / update
-    python3 install_kicad_plugins.py --uninstall  # remove everything Irona installed
-    python3 install_kicad_plugins.py --dry-run    # show what would change
+    python3 install_kicad_plugins.py                  # install / update the plugins
+    python3 install_kicad_plugins.py --assistant-deps # also pip-install `anthropic` into KiCad's Python
+    python3 install_kicad_plugins.py --register-mcp   # also add the Irona MCP server to Claude Code,
+                                                      # Claude Desktop and Antigravity
+    python3 install_kicad_plugins.py --uninstall      # remove everything Irona installed
+    python3 install_kicad_plugins.py --dry-run        # show what would change
 """
 
 import argparse
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent
-PLUGINS = ["irona_simulator", "irona_rule_check", "irona_design_review", "irona_docs"]
+PLUGINS = ["irona_simulator", "irona_rule_check", "irona_design_review", "irona_docs", "irona_assistant"]
 LEGACY_DIRS = ["irona_kicad_plugin", "org_kicad_irona_copilot"]
 LEGACY_PCM_IDS = {"org.kicad.irona_copilot", "irona.kicad.plugin"}
 VERSIONS = ["10.0", "9.0"]
@@ -88,10 +92,97 @@ def clean_pcm_registry(dry: bool) -> None:
                     f.write_text(json.dumps(data, indent=4), encoding="utf-8")
 
 
+# --------------------------------------------------------------------------- Assistant dependencies
+FLATPAK_ID = "org.kicad.KiCad"
+
+
+def install_assistant_deps(dry: bool) -> bool:
+    """pip-installs `anthropic` into the Python that KiCad's plugins run in (user site-packages)."""
+    flatpak_installed = shutil.which("flatpak") and subprocess.run(
+        ["flatpak", "info", FLATPAK_ID], capture_output=True).returncode == 0
+    if flatpak_installed:
+        cmd = ["flatpak", "run", "--command=python3", FLATPAK_ID, "-m", "pip", "install", "--user", "--upgrade", "anthropic"]
+    else:  # native KiCad uses the system Python
+        cmd = [sys.executable, "-m", "pip", "install", "--user", "--upgrade", "anthropic"]
+    print("Installing the Assistant's dependency (anthropic) for KiCad:\n  " + " ".join(cmd))
+    if dry:
+        return True
+    return subprocess.run(cmd).returncode == 0
+
+
+# --------------------------------------------------------------------------- MCP registration
+MCP_NAME = "irona"
+
+
+def mcp_entry(project_arg=None) -> dict:
+    args = ["-m", "irona", "mcp"] + (["--project", project_arg] if project_arg else [])
+    return {"command": shutil.which("python3") or sys.executable, "args": args, "env": {"PYTHONPATH": str(REPO)}}
+
+
+def mcp_config_files():
+    """(label, path, entry) for clients configured through a JSON file."""
+    home = Path.home()
+    return [
+        # Antigravity substitutes the open workspace folder, so the server starts on that project.
+        ("Antigravity", home / ".gemini" / "antigravity" / "mcp_config.json", mcp_entry("${workspace.path}")),
+        ("Claude Desktop", home / ".config" / "Claude" / "claude_desktop_config.json", mcp_entry()),
+    ]
+
+
+def _edit_json(path: Path, mutate, dry: bool) -> None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    except ValueError:
+        print(f"  skip    {path} (not valid JSON)")
+        return
+    before = json.dumps(data, sort_keys=True)
+    mutate(data)
+    if json.dumps(data, sort_keys=True) == before:
+        return
+    print(f"  update  {path}")
+    if not dry:
+        if path.exists():
+            shutil.copy2(path, path.with_suffix(path.suffix + ".bak"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
+def register_mcp(dry: bool, remove: bool = False) -> None:
+    print(("Removing" if remove else "Registering") + " the Irona MCP server:")
+    for label, path, entry in mcp_config_files():
+        if not path.parent.exists():
+            continue  # client not installed
+
+        def mutate(data, entry=entry):
+            servers = data.setdefault("mcpServers", {})
+            if remove:
+                servers.pop(MCP_NAME, None)
+            else:
+                servers[MCP_NAME] = entry
+        print(f"  {label}")
+        _edit_json(path, mutate, dry)
+    claude = shutil.which("claude")
+    if claude:
+        print("  Claude Code (user scope)")
+        cmds = [[claude, "mcp", "remove", "--scope", "user", MCP_NAME]]
+        if not remove:
+            e = mcp_entry()
+            cmds.append([claude, "mcp", "add", "--scope", "user", MCP_NAME, "-e", f"PYTHONPATH={REPO}", "--",
+                         e["command"], *e["args"]])
+        for cmd in cmds:
+            print("    " + " ".join(cmd))
+            if not dry:
+                subprocess.run(cmd, capture_output=True)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--uninstall", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--assistant-deps", action="store_true",
+                    help="pip-install the anthropic package into KiCad's Python for the Assistant plugin")
+    ap.add_argument("--register-mcp", action="store_true",
+                    help="add the Irona MCP server to Claude Code, Claude Desktop and Antigravity")
     args = ap.parse_args()
     dry = args.dry_run
 
@@ -109,6 +200,8 @@ def main() -> int:
         for name in PLUGINS:
             remove(d / name, dry)
     if args.uninstall:
+        if args.register_mcp:
+            register_mcp(dry, remove=True)
         print("Uninstalled.")
         return 0
 
@@ -123,9 +216,20 @@ def main() -> int:
             shutil.copytree(REPO / "plugins" / name, dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
             (dest / "irona_config.json").write_text(json.dumps({"irona_root": str(REPO)}, indent=2), encoding="utf-8")
 
+    ok = True
+    if args.assistant_deps:
+        ok = install_assistant_deps(dry)
+        if not ok:
+            print("Installing anthropic failed; the other plugins are installed. See the pip output above.")
+    if args.register_mcp:
+        register_mcp(dry)
+        print("Restart Claude Desktop / Antigravity to pick up the server.")
+
     print("\nRestart the PCB editor (or Tools > External Plugins > Refresh Plugins).")
-    print("The four Irona buttons appear on the toolbar and under Tools > External Plugins.")
-    return 0
+    print("The Irona buttons appear on the toolbar and under Tools > External Plugins.")
+    if not args.assistant_deps:
+        print("The Assistant also needs the anthropic package in KiCad's Python: re-run with --assistant-deps.")
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

@@ -69,3 +69,27 @@ class TestInstaller(ProjectTestCase):
         with mock.patch.object(Path, "home", return_value=home), mock.patch.object(sys, "argv", ["install", "--uninstall"]):
             self.assertEqual(installer.main(), 0)
         self.assertFalse(any((data / "scripting/plugins" / n).exists() for n in installer.PLUGINS))
+
+
+class TestMCPRegistration(ProjectTestCase):
+    def test_register_and_remove(self):
+        home = self.project_dir / "home"
+        ag = home / ".gemini/antigravity/mcp_config.json"
+        desktop = home / ".config/Claude/claude_desktop_config.json"
+        ag.parent.mkdir(parents=True)
+        ag.write_text(json.dumps({"mcpServers": {"other": {"command": "x"}}}))
+        desktop.parent.mkdir(parents=True)  # installed, no config yet
+
+        real_which = installer.shutil.which
+        no_claude = lambda name: None if name == "claude" else real_which(name)  # noqa: E731
+        with mock.patch.object(Path, "home", return_value=home), mock.patch.object(installer.shutil, "which", no_claude):
+            installer.register_mcp(dry=False)
+            servers = json.loads(ag.read_text())["mcpServers"]
+            self.assertEqual(set(servers), {"other", "irona"})
+            self.assertEqual(servers["irona"]["args"], ["-m", "irona", "mcp", "--project", "${workspace.path}"])
+            self.assertEqual(servers["irona"]["env"]["PYTHONPATH"], str(REPO))
+            self.assertTrue(ag.with_suffix(".json.bak").exists())
+            self.assertIn("irona", json.loads(desktop.read_text())["mcpServers"])
+
+            installer.register_mcp(dry=False, remove=True)
+            self.assertEqual(set(json.loads(ag.read_text())["mcpServers"]), {"other"})

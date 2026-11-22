@@ -5,11 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "irona-kicad"
 version = "2.0.0"
-description = "KiCad plugins and CLI: board simulation, DRC/ERC, design review and documentation"
+description = "KiCad plugins and CLI: board simulation, DRC/ERC, design review, documentation and a Claude design assistant"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = []  # standard library only; kicad-cli is used for Gerbers/drill/schematic PDF when present
+
+[project.optional-dependencies]
+assistant = ["anthropic>=2.12"]
 
 [project.scripts]
 irona = "irona.cli:main"

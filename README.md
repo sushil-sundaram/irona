@@ -1,6 +1,6 @@
 # Irona
 
-Analysis and documentation tools for KiCad 9 and 10. Irona ships as four focused PCB Editor action plugins and a command-line interface that share one dependency-free Python core.
+Analysis and documentation tools for KiCad 9 and 10. Irona ships as five focused PCB Editor action plugins and a command-line interface that share one dependency-free Python core, plus an MCP server that connects the design to Claude Code, Claude Desktop and Antigravity.
 
 | Plugin | Purpose |
 | --- | --- |
@@ -8,6 +8,7 @@ Analysis and documentation tools for KiCad 9 and 10. Irona ships as four focused
 | **Irona Rule Check** | Design-rule check of the board (clearance, drill, annular ring, edge clearance, unconnected items) and electrical-rule check of the schematic. |
 | **Irona Design Review** | SI/PI review against IPC-2221/2222/2223/6012, plus a circuit review covering power rails, regulators, EMC pre-compliance and JLCPCB/PCBWay DFM. |
 | **Irona Docs** | Design report PDF, schematic PDF, Gerbers and drill files, BOM and placement CSVs, a fabrication ZIP and an index page. |
+| **Irona Assistant** | Chat with Claude about the open design: part availability and lifecycle, datasheets, and whether each part is connected and valued the way its datasheet requires. |
 
 The plugin dialogs use the [Dracula](https://draculatheme.com) colour palette.
 
@@ -16,11 +17,14 @@ The plugin dialogs use the [Dracula](https://draculatheme.com) colour palette.
 | ![Simulator dialog](docs/screenshots/simulator.png) | ![Design Review dialog](docs/screenshots/design_review.png) |
 | **Rule Check** | **Docs** |
 | ![Rule Check dialog](docs/screenshots/rule_check.png) | ![Docs dialog](docs/screenshots/docs.png) |
+| **Assistant** | |
+| ![Assistant dialog](docs/screenshots/assistant.png) | |
 
 ## Requirements
 
 - KiCad 9.0 or 10.0 (native or Flatpak) for the plugins
 - Python 3.10 or later for the CLI; no third-party packages are required
+- For the Assistant plugin and `irona ask` only: the [`anthropic`](https://pypi.org/project/anthropic/) package and an Anthropic API key. The MCP server needs neither.
 - `kicad-cli` for Gerber, drill and schematic PDF export. It is found on `PATH`, inside the KiCad Flatpak, or via `flatpak run`. Without it those outputs are reported as skipped.
 
 ## Installation
@@ -31,12 +35,14 @@ cd irona
 python3 install_kicad_plugins.py
 ```
 
-The installer copies the four plugins into the user plugin folder of every KiCad 9/10 installation it finds and points them at the cloned repository, so updating the repository updates the plugins after a KiCad restart. It also removes the earlier single-plugin release of Irona if present.
+The installer copies the five plugins into the user plugin folder of every KiCad 9/10 installation it finds and points them at the cloned repository, so updating the repository updates the plugins after a KiCad restart. It also removes the earlier single-plugin release of Irona if present.
 
 | Option | Effect |
 | --- | --- |
 | `--dry-run` | Print the changes without making them |
-| `--uninstall` | Remove all Irona plugins |
+| `--assistant-deps` | Install the `anthropic` package into KiCad's Python (user site-packages; inside the Flatpak when KiCad is a Flatpak) |
+| `--register-mcp` | Add the Irona MCP server to Antigravity, Claude Desktop and Claude Code (user scope). Existing config files are backed up as `*.bak` |
+| `--uninstall` | Remove all Irona plugins (with `--register-mcp`, also the MCP registrations) |
 
 Restart the PCB Editor, or choose **Tools → External Plugins → Refresh Plugins**. The plugins appear on the toolbar and under **Tools → External Plugins**.
 
@@ -48,6 +54,30 @@ The plugins read the project files on disk, so save the board and schematic befo
 - **Rule Check** — set the minimum clearance and drill size, then select **Run**.
 - **Design Review** — runs the SI/PI and circuit reviews; results can be filtered by severity, and the full Markdown report is available from **Open report**.
 - **Docs** — select **Generate**. Double-click a result row to open that file.
+- **Assistant** — ask a question, or use **Availability**, **Datasheets** or **Review implementation**. On first use, select **API key…**; the key is stored in `~/.config/irona/assistant.json`, readable only by you. **Effort** trades depth for speed and cost. **Save chat** writes the conversation to `<project>/irona-out/assistant/`.
+
+## Assistant and MCP server
+
+Both read the design through the same tools: a project overview (every part with value, footprint, MPN, manufacturer and datasheet link), per-part pin detail (pin name, electrical type, net and the pins it connects to), net listings, and Irona's rule check, design review and simulation. Connectivity comes from the saved board, pin names from the schematic's symbols, and part fields from the schematic.
+
+- **Assistant plugin** — calls the Claude API (Claude Opus 5.5 by default) with server-side web search and web fetch, so Claude can check distributor stock and lifecycle and read datasheets, citing its sources. Usage is billed to your Anthropic API account.
+- **MCP server** — `python3 -m irona mcp` serves the same tools over stdio to any MCP client, which brings its own model and web search: Claude Code, Claude Desktop or Antigravity, with no API key. Register it with `install_kicad_plugins.py --register-mcp`, or add it by hand:
+
+```json
+{
+  "mcpServers": {
+    "irona": {
+      "command": "python3",
+      "args": ["-m", "irona", "mcp", "--project", "/path/to/kicad/project"],
+      "env": { "PYTHONPATH": "/path/to/irona" }
+    }
+  }
+}
+```
+
+`--project` is optional: every tool also takes a `project` argument, and `find_projects` lists the KiCad projects under a folder.
+
+Availability, pricing and datasheet details come from the web at the time of the question and can change; the Assistant's answers are a starting point for review, not a substitute for checking the datasheet.
 
 ## Command-line interface
 
@@ -56,9 +86,11 @@ python3 -m irona sim    PROJECT [--current NET=A ...] [--power REF=W ...] [--amb
 python3 -m irona check  PROJECT [--check]
 python3 -m irona review PROJECT
 python3 -m irona docs   PROJECT [--out DIR]
+python3 -m irona ask    PROJECT "question" [--effort LEVEL] [--no-web] [--save]
+python3 -m irona mcp    [--project PROJECT]
 ```
 
-Results are printed as JSON. With `--check`, the command exits with status 1 when a limit is exceeded or an error is found, which makes it suitable as a CI gate. When `sim` is run without inputs it uses those saved in `irona-sim.json`.
+`sim`, `check`, `review` and `docs` print JSON; `ask` streams Claude's answer as text. With `--check`, the command exits with status 1 when a limit is exceeded or an error is found, which makes it suitable as a CI gate. When `sim` is run without inputs it uses those saved in `irona-sim.json`.
 
 Example using the bundled sample project:
 
@@ -96,6 +128,10 @@ irona/                  core library (standard library only)
   circuit_review.py     circuit review (wraps the vendored analyzers in happy/)
   report_pdf.py         PDF design report
   docs.py               kicad-cli exports, BOM, placement, fab package
+  design_context.py     parts, fields and pin-to-net connectivity of a project
+  assistant_tools.py    design tools shared by the Assistant and the MCP server
+  assistant.py          Claude API chat (Assistant plugin, irona ask)
+  mcp_server.py         MCP server (stdio)
   kicad_ui.py           shared plugin registration and dialog base
   theme.py              colour palette
   cli.py                command-line interface
